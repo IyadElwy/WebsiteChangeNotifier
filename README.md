@@ -4,11 +4,11 @@
 
 ### Requirements:
 - Wget on your default OS
- > For Windows: [Click Here To Download Wget](https://eternallybored.org/misc/wget/)
- > Linux and Mac has it pre-installed 
+  - For Windows: [Click Here To Download Wget](https://eternallybored.org/misc/wget/)
+  - Linux and Mac has it pre-installed 
 
 
-###To get started:
+### To get started:
 ```python
 if __name__ == '__main__':
     file = Website(link="Any Website Link",
