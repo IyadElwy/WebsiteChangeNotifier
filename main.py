@@ -137,3 +137,5 @@ if __name__ == '__main__':
 
 # TODO: use the html of the original site to send an html view of the website via email
 # TODO: but with changes highlighted using the indexes of the changed lines
+# TODO: Add input option to quit with the input validation module and use the time
+# TODO: out module to check for when the program should continue instead of the sleep function
