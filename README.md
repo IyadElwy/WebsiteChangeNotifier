@@ -7,8 +7,17 @@
   - For Windows: [Click Here To Download Wget](https://eternallybored.org/misc/wget/)
   - Linux and Mac has it pre-installed 
 
+### Dependencies:
+  - os
+  - time
+  - smtplib
+  - ssl
+  -  email.mime.text from MIMEText
+  -  email.mime.multipart from MIMEMultipart
 
-### To get started:
+
+
+### How to use:
 ```python
 if __name__ == '__main__':
     file = Website(link="Any Website Link",
