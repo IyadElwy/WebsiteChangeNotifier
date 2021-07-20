@@ -14,6 +14,6 @@ if __name__ == '__main__':
     file = Website(link="Any Website Link",
                    email_address="TEST@email.com", password="PASSWORD",
                    message_to_send="Your site changed!") # initialize the Website object to be monitored
-    file.start_monitoring(5) #check for change every 5 seconds
+    file.start_monitoring(5, True) #check for change every 5 seconds, if second param set to True a copy of the site will be sent via email
 
 ```
