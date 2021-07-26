@@ -1,6 +1,5 @@
 import random
 import subprocess
-import sys
 import time
 from mail_sender import Mail
 from rich.console import Console
@@ -8,7 +7,6 @@ from rich.layout import Layout
 from rich.panel import Panel
 from rich.prompt import Prompt
 from rich.align import Align
-from rich.progress import track
 
 """A Program to monitor Websites and get the specific info about the changes via email."""
 
@@ -258,32 +256,37 @@ class BasicLayout:
 
 if __name__ == '__main__':
     """Initialization Code"""
-    layout_variable = BasicLayout()
-    layout_variable.print_layout()
 
-    url_to_monitor = Prompt.ask("[bold red] Please enter the links to the website you wish to monitor (separate by "
-                                "space ' ' | max = 15) [""/bold red]")
-    email = Prompt.ask("[bold green] Please enter your email  [""/bold green]")
-    password = Prompt.ask("[bold blue] Please enter your email password [""/bold blue]")
-    message = Prompt.ask("[bold purple] Please enter the message you will receive as a notification for a "
-                         "change [""/bold purple]")
-    intervals = int(Prompt.ask("[bold green] Please enter the intervals of the check (Seconds) [""/bold green]"))
-    if_wants_html = Prompt.ask("[bold blue] Please state if you wish to be sent the Html boiler as an email "
-                               "attachment (T/F) [""/bold blue]")
-    if if_wants_html == "T":
-        if_wants_html = True
-    else:
-        if_wants_html = False
+    try:
+        layout_variable = BasicLayout()
+        layout_variable.print_layout()
 
-    layout_variable.update_link_box(url_to_monitor.split(" "))
-    layout_variable.print_layout()
+        url_to_monitor = Prompt.ask("[bold red] Please enter the links to the website you wish to monitor (separate by "
+                                    "space ' ' | max = 15) [""/bold red]")
+        email = Prompt.ask("[bold green] Please enter your email  [""/bold green]")
+        password = Prompt.ask("[bold blue] Please enter your email password [""/bold blue]")
+        message = Prompt.ask("[bold purple] Please enter the message you will receive as a notification for a "
+                             "change [""/bold purple]")
+        intervals = int(Prompt.ask("[bold green] Please enter the intervals of the check (Seconds) [""/bold green]"))
+        if_wants_html = Prompt.ask("[bold blue] Please state if you wish to be sent the Html boiler as an email "
+                                   "attachment (T/F) [""/bold blue]")
+        if if_wants_html == "T":
+            if_wants_html = True
+        else:
+            if_wants_html = False
 
-    while True:
-        for url in url_to_monitor.split(" "):
-            file = Website(link=url,
-                           email_address=email, password=password,
-                           message_to_send=message)
-            file.start_monitoring(intervals, if_wants_html)
+        layout_variable.update_link_box(url_to_monitor.split(" "))
+        layout_variable.print_layout()
+
+        while True:
+            for url in url_to_monitor.split(" "):
+                file = Website(link=url,
+                               email_address=email, password=password,
+                               message_to_send=message)
+                file.start_monitoring(intervals, if_wants_html)
+    except Exception:
+        layout_variable.console.print("\n\n Error occurred while running.\n Please check your input.\n\n",
+                                      style="RED")
 
 # TODO: Add input option to quit with the input validation module and use the time
 # TODO: out module to check for when the program should continue instead of the sleep function
