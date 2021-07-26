@@ -1,6 +1,14 @@
-import os
+import random
+import subprocess
+import sys
 import time
 from mail_sender import Mail
+from rich.console import Console
+from rich.layout import Layout
+from rich.panel import Panel
+from rich.prompt import Prompt
+from rich.align import Align
+from rich.progress import track
 
 """A Program to monitor Websites and get the specific info about the changes via email."""
 
@@ -37,31 +45,39 @@ class Website:
         :return: None
         :rtype: None
         """
-        os.system(f"wget -O file_with_data.html --html-extension {self._link}")
+        layout_second_variable = BasicLayout()
+        layout_second_variable.console.print(f"\nChecking... {self._link}", style="#FFFFFF")
+
+        subprocess.run(f"wget -O file_with_data.html --html-extension {self._link}",
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
         current_file_contents = self._convert_to_string(False)
-        while True:
-            os.system(f"wget -O file_with_new_data.html --html-extension {self._link}")
-            new_file_contents = self._convert_to_string(True)
 
-            if current_file_contents == new_file_contents:
-                pass
+        subprocess.run(f"wget -O file_with_new_data.html --html-extension {self._link}",
+                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
+        new_file_contents = self._convert_to_string(True)
+
+        if current_file_contents == new_file_contents:
+            layout_second_variable.console.print(f"No Changes detected\n",
+                                                 style=layout_second_variable.get_random_color())
+        else:
+            layout_second_variable.console.print(f"Change detected\n"
+                                                 f"------Sending email-------",
+                                                 style=layout_second_variable.get_random_color())
+            changes = self._detect_specific_change(current_file_contents,
+                                                   new_file_contents, False)
+            mail = Mail(self._email_address, self._password)
+            content_to_be_sent = f"{self._mail_content}\n\nOLD CONTENT :\n" \
+                                 f"{changes[0]}\n\nNEW CONTENT :\n" \
+                                 f"{changes[1]}\n\n" \
+                                 f"LINES IN HTML:\n" \
+                                 f"{self._find_html_line_to_mark(changes[1], new_file_contents)}"
+            if send_html:
+                mail.send(self._email_address, "Website Notifier", content_to_be_sent,
+                          self._create_full_html_site())
             else:
-                changes = self._detect_specific_change(current_file_contents,
-                                                       new_file_contents, False)
-                mail = Mail(self._email_address, self._password)
-                content_to_be_sent = f"{self._mail_content}\n\nOLD CONTENT :\n" \
-                                     f"{changes[0]}\n\nNEW CONTENT :\n" \
-                                     f"{changes[1]}\n\n" \
-                                     f"LINES IN HTML:\n" \
-                                     f"{self._find_html_line_to_mark(changes[1], new_file_contents)}"
-                if send_html:
-                    mail.send(self._email_address, "Website Notifier", content_to_be_sent,
-                              self._create_full_html_site())
-                else:
-                    mail.send(self._email_address, "Website Notifier", content_to_be_sent)
-                break
+                mail.send(self._email_address, "Website Notifier", content_to_be_sent)
 
-            time.sleep(monitoring_intervals_in_seconds)
+        time.sleep(monitoring_intervals_in_seconds)
 
     @staticmethod
     def _convert_to_string(is_new_file: bool) -> list[str]:
@@ -162,33 +178,115 @@ class Website:
         html_page.insert(0, message)
         return "\n".join(html_page)
 
-    @staticmethod
-    def _create_box_over_changes(list_with_indexes: list[int], html_page: list[str]) -> list[str]:
-        # TODO: Fix
-        """
-        Helper method to circle the changes in the html
-        :param list_with_indexes: the list with the index of the html lines that have changed
-        :type list_with_indexes: list[int]
-        :param html_page: the full html page as a list
-        :type html_page: list[str]
-        :return: the html page as a list but with the changed lines surrounded by a square
-        :rtype: list[str]
-        """
-        html_to_return = html_page
-        for index in list_with_indexes:
-            temp_line = html_to_return[index]
-            line_with_square = f"""{temp_line[0:2]}style="border:3px; border-style:solid; border-color:#FF0000; 
-            padding: 1em;"{temp_line[2:]}"""
-            html_to_return[index] = line_with_square
+    # @staticmethod
+    # def _create_box_over_changes(list_with_indexes: list[int], html_page: list[str]) -> list[str]:
+    #     # TODO: Fix
+    #     """
+    #     Helper method to circle the changes in the html
+    #     :param list_with_indexes: the list with the index of the html lines that have changed
+    #     :type list_with_indexes: list[int]
+    #     :param html_page: the full html page as a list
+    #     :type html_page: list[str]
+    #     :return: the html page as a list but with the changed lines surrounded by a square
+    #     :rtype: list[str]
+    #     """
+    #     html_to_return = html_page
+    #     for index in list_with_indexes:
+    #         temp_line = html_to_return[index]
+    #         line_with_square = f"""{temp_line[0:2]}style="border:3px; border-style:solid; border-color:#FF0000;
+    #         padding: 1em;"{temp_line[2:]}"""
+    #         html_to_return[index] = line_with_square
+    #
+    #     return html_to_return
 
-        return html_to_return
+
+class BasicLayout:
+    """Basic UI console Layout class"""
+
+    def __init__(self):
+        """Initializes the needed console and layout class attributes"""
+        self.console = Console()
+        self.layout = Layout()
+        self._welcome_box_panel_text = "Welcome To Your Web-Monitoring Tool"
+        self._link_box_panel_text = "Links to the websites you wish to monitor:"
+
+        self.layout.split_column(
+            Layout(name="Up"),
+            Layout(name="Down")
+        )
+
+        self.layout["Up"].size = 3
+        self.layout["Up"].ratio = 1
+        self.layout["Down"].ratio = 3
+
+        self.layout["Up"].update(Panel(Align.center(self._welcome_box_panel_text), style="#00FFFF bold"))
+        self.layout["Down"].update(Panel(self._link_box_panel_text, style="#FFDAB9"))
+
+    def print_layout(self):
+        """Helper method to print layout"""
+        self.console.print(self.layout)
+
+    def update_link_box(self, links: list[str]) -> None:
+        """
+         Function to update the link box
+        :param links: the text that should be placed in the box
+        :type links: str
+        :return: None
+        :rtype: None
+        """
+        text = f"{self._link_box_panel_text}\n"
+        for link in links:
+            text += f"\n{link}\n"
+        self.layout["Down"].update(Panel(f"{text}"))
+
+    @staticmethod
+    def get_random_color() -> str:
+        """
+        Helper function to return random color
+        :return:
+        :rtype:
+        """
+        colors = ["#FFFFFF",
+                  "#FF0000",
+                  "#00FF00",
+                  "#0000FF",
+                  "#FFFF00",
+                  "#00FFFF",
+                  "#FF00FF"]
+        return colors[random.randint(0, len(colors) - 1)]
 
 
 if __name__ == '__main__':
-    file = Website(link="https://www.w3schools.com/python/ref_string_rindex.asp",
-                   email_address="test@gmail.com", password="Password",
-                   message_to_send="Change on Website detected!")
-    file.start_monitoring(2, True)
+    """Initialization Code"""
+    layout_variable = BasicLayout()
+    layout_variable.print_layout()
+
+    url_to_monitor = Prompt.ask("[bold red] Please enter the links to the website you wish to monitor (separate by "
+                                "space ' ' | max = 15) [""/bold red]")
+    email = Prompt.ask("[bold green] Please enter your email  [""/bold green]")
+    password = Prompt.ask("[bold blue] Please enter your email password [""/bold blue]")
+    message = Prompt.ask("[bold purple] Please enter the message you will receive as a notification for a "
+                         "change [""/bold purple]")
+    intervals = int(Prompt.ask("[bold green] Please enter the intervals of the check (Seconds) [""/bold green]"))
+    if_wants_html = Prompt.ask("[bold blue] Please state if you wish to be sent the Html boiler as an email "
+                               "attachment (T/F) [""/bold blue]")
+    if if_wants_html == "T":
+        if_wants_html = True
+    else:
+        if_wants_html = False
+
+    layout_variable.update_link_box(url_to_monitor.split(" "))
+    layout_variable.print_layout()
+
+    while True:
+        for url in url_to_monitor.split(" "):
+            file = Website(link=url,
+                           email_address=email, password=password,
+                           message_to_send=message)
+            file.start_monitoring(intervals, if_wants_html)
 
 # TODO: Add input option to quit with the input validation module and use the time
 # TODO: out module to check for when the program should continue instead of the sleep function
+
+# TODO: Add feature for user to have something specific he is searching for on the website and if it appears
+# TODO: he will get notified. User can input their own regular expressions.Implement using re.
