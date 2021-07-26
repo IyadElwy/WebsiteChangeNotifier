@@ -285,7 +285,8 @@ if __name__ == '__main__':
                                message_to_send=message)
                 file.start_monitoring(intervals, if_wants_html)
     except Exception:
-        layout_variable.console.print("\n\n Error occurred while running.\n Please check your input.\n\n",
+        layout_variable.console.print("\n\n Error occurred while running.\n Please check your input and internet "
+                                      "connection.\n\n",
                                       style="RED")
 
 # TODO: Add input option to quit with the input validation module and use the time
@@ -293,3 +294,5 @@ if __name__ == '__main__':
 
 # TODO: Add feature for user to have something specific he is searching for on the website and if it appears
 # TODO: he will get notified. User can input their own regular expressions.Implement using re.
+
+# TODO: use input module to hide the password input

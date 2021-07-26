@@ -1,0 +1,493 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Progress Display &mdash; Rich 10.5.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+
+  
+  
+
+  
+  
+
+  
+    <link rel="canonical" href="https://rich.readthedocs.io/en/stable/progress.html" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/jquery.js"></script>
+        <script src="_static/underscore.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/clipboard.min.js"></script>
+        <script src="_static/copybutton.js"></script>
+        <script async="async" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Syntax" href="syntax.html" />
+    <link rel="prev" title="Panel" href="panel.html" /> 
+
+<!-- RTD Extra Head -->
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="application/json" id="READTHEDOCS_DATA">{"ad_free": false, "api_host": "https://readthedocs.org", "build_date": "2021-07-12T18:27:20Z", "builder": "sphinx", "canonical_url": null, "commit": "2ea7e586", "docroot": "/docs/source/", "features": {"docsearch_disabled": false}, "global_analytics_code": "UA-17997319-1", "language": "en", "page": "progress", "programming_language": "words", "project": "rich", "proxied_api_host": "/_", "source_suffix": ".rst", "subprojects": {}, "theme": "sphinx_rtd_theme", "user_analytics_code": "", "version": "stable"}</script>
+
+<!--
+Using this variable directly instead of using `JSON.parse` is deprecated.
+The READTHEDOCS_DATA global variable will be removed in the future.
+-->
+<script type="text/javascript">
+READTHEDOCS_DATA = JSON.parse(document.getElementById('READTHEDOCS_DATA').innerHTML);
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js" async="async"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Rich
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption" role="heading"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="console.html">Console API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="style.html">Styles</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markup.html">Console Markup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="text.html">Rich Text</a></li>
+<li class="toctree-l1"><a class="reference internal" href="highlighting.html">Highlighting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pretty.html">Pretty Printing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging Handler</a></li>
+<li class="toctree-l1"><a class="reference internal" href="traceback.html">Traceback</a></li>
+<li class="toctree-l1"><a class="reference internal" href="prompt.html">Prompt</a></li>
+<li class="toctree-l1"><a class="reference internal" href="columns.html">Columns</a></li>
+<li class="toctree-l1"><a class="reference internal" href="group.html">Render Groups</a></li>
+<li class="toctree-l1"><a class="reference internal" href="markdown.html">Markdown</a></li>
+<li class="toctree-l1"><a class="reference internal" href="padding.html">Padding</a></li>
+<li class="toctree-l1"><a class="reference internal" href="panel.html">Panel</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Progress Display</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#basic-usage">Basic Usage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#advanced-usage">Advanced usage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#updating-tasks">Updating tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hiding-tasks">Hiding tasks</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transient-progress">Transient progress</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#indeterminate-progress">Indeterminate progress</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#auto-refresh">Auto refresh</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#expand">Expand</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#columns">Columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#table-columns">Table Columns</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#print-log">Print / log</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redirecting-stdout-stderr">Redirecting stdout / stderr</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#customizing">Customizing</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#multiple-progress">Multiple Progress</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="syntax.html">Syntax</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tables.html">Tables</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tree.html">Tree</a></li>
+<li class="toctree-l1"><a class="reference internal" href="live.html">Live Display</a></li>
+<li class="toctree-l1"><a class="reference internal" href="layout.html">Layout</a></li>
+<li class="toctree-l1"><a class="reference internal" href="protocol.html">Console Protocol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Rich</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Progress Display</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            
+              <a href="https://github.com/willmcgugan/rich/blob/2ea7e586792a95e33cddc74f9e89e62bcd8d7f2b/docs/source/progress.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="progress-display">
+<span id="progress"></span><h1>Progress Display<a class="headerlink" href="#progress-display" title="Permalink to this headline">¶</a></h1>
+<p>Rich can display continuously updated information regarding the progress of long running tasks / file copies etc. The information displayed is configurable, the default will display a description of the ‘task’, a progress bar, percentage complete, and estimated time remaining.</p>
+<p>Rich progress display supports multiple tasks, each with a bar and progress information. You can use this to track concurrent tasks where the work is happening in threads or processes.</p>
+<p>To see how the progress display looks, try this from the command line:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">rich</span><span class="o">.</span><span class="n">progress</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Progress works with Jupyter notebooks, with the caveat that auto-refresh is disabled. You will need to explicitly call <a class="reference internal" href="reference/progress.html#rich.progress.Progress.refresh" title="rich.progress.Progress.refresh"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh()</span></code></a> or set <code class="docutils literal notranslate"><span class="pre">refresh=True</span></code> when calling <a class="reference internal" href="reference/progress.html#rich.progress.Progress.update" title="rich.progress.Progress.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a>. Or use the <a class="reference internal" href="reference/progress.html#rich.progress.track" title="rich.progress.track"><code class="xref py py-func docutils literal notranslate"><span class="pre">track()</span></code></a> function which does a refresh automatically on each loop.</p>
+</div>
+<div class="section" id="basic-usage">
+<h2>Basic Usage<a class="headerlink" href="#basic-usage" title="Permalink to this headline">¶</a></h2>
+<p>For basic usage call the <a class="reference internal" href="reference/progress.html#rich.progress.track" title="rich.progress.track"><code class="xref py py-func docutils literal notranslate"><span class="pre">track()</span></code></a> function, which accepts a sequence (such as a list or range object) and an optional description of the job you are working on. The track method will yield values from the sequence and update the progress information on each iteration. Here’s an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rich.progress</span> <span class="kn">import</span> <span class="n">track</span>
+
+<span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">track</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">description</span><span class="o">=</span><span class="s2">&quot;Processing...&quot;</span><span class="p">):</span>
+    <span class="n">do_work</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="advanced-usage">
+<h2>Advanced usage<a class="headerlink" href="#advanced-usage" title="Permalink to this headline">¶</a></h2>
+<p>If you require multiple tasks in the display, or wish to configure the columns in the progress display, you can work directly with the <a class="reference internal" href="reference/progress.html#rich.progress.Progress" title="rich.progress.Progress"><code class="xref py py-class docutils literal notranslate"><span class="pre">Progress</span></code></a> class. Once you have constructed a Progress object, add task(s) with (<a class="reference internal" href="reference/progress.html#rich.progress.Progress.add_task" title="rich.progress.Progress.add_task"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_task()</span></code></a>) and update progress with <a class="reference internal" href="reference/progress.html#rich.progress.Progress.update" title="rich.progress.Progress.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a>.</p>
+<p>The Progress class is designed to be used as a <em>context manager</em> which will start and stop the progress display automatically.</p>
+<p>Here’s a simple example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+
+<span class="kn">from</span> <span class="nn">rich.progress</span> <span class="kn">import</span> <span class="n">Progress</span>
+
+<span class="k">with</span> <span class="n">Progress</span><span class="p">()</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
+
+    <span class="n">task1</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;[red]Downloading...&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">task2</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;[green]Processing...&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+    <span class="n">task3</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;[cyan]Cooking...&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+
+    <span class="k">while</span> <span class="ow">not</span> <span class="n">progress</span><span class="o">.</span><span class="n">finished</span><span class="p">:</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">task1</span><span class="p">,</span> <span class="n">advance</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">task2</span><span class="p">,</span> <span class="n">advance</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">task3</span><span class="p">,</span> <span class="n">advance</span><span class="o">=</span><span class="mf">0.9</span><span class="p">)</span>
+        <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">0.02</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">total</span></code> value associated with a task is the number of steps that must be completed for the progress to reach 100%. A <em>step</em> in this context is whatever makes sense for your application; it could be number of bytes of a file read, or number of images processed, etc.</p>
+<div class="section" id="updating-tasks">
+<h3>Updating tasks<a class="headerlink" href="#updating-tasks" title="Permalink to this headline">¶</a></h3>
+<p>When you call <a class="reference internal" href="reference/progress.html#rich.progress.Progress.add_task" title="rich.progress.Progress.add_task"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_task()</span></code></a> you get back a <cite>Task ID</cite>. Use this ID to call <a class="reference internal" href="reference/progress.html#rich.progress.Progress.update" title="rich.progress.Progress.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> whenever you have completed some work, or any information has changed. Typically you will need to update <code class="docutils literal notranslate"><span class="pre">completed</span></code> every time you have completed a step. You can do this by updated <code class="docutils literal notranslate"><span class="pre">completed</span></code> directly or by setting <code class="docutils literal notranslate"><span class="pre">advance</span></code> which will add to the current <code class="docutils literal notranslate"><span class="pre">completed</span></code> value.</p>
+<p>The <a class="reference internal" href="reference/progress.html#rich.progress.Progress.update" title="rich.progress.Progress.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> method collects keyword arguments which are also associated with the task. Use this to supply any additional information you would like to render in the progress display. The additional arguments are stored in <code class="docutils literal notranslate"><span class="pre">task.fields</span></code> and  may be referenced in <a class="reference internal" href="#columns"><span class="std std-ref">Column classes</span></a>.</p>
+</div>
+<div class="section" id="hiding-tasks">
+<h3>Hiding tasks<a class="headerlink" href="#hiding-tasks" title="Permalink to this headline">¶</a></h3>
+<p>You can show or hide tasks by updating the tasks <code class="docutils literal notranslate"><span class="pre">visible</span></code> value. Tasks are visible by default, but you can also add a invisible task by calling <a class="reference internal" href="reference/progress.html#rich.progress.Progress.add_task" title="rich.progress.Progress.add_task"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_task()</span></code></a> with <code class="docutils literal notranslate"><span class="pre">visible=False</span></code>.</p>
+</div>
+<div class="section" id="transient-progress">
+<h3>Transient progress<a class="headerlink" href="#transient-progress" title="Permalink to this headline">¶</a></h3>
+<p>Normally when you exit the progress context manager (or call <a class="reference internal" href="reference/progress.html#rich.progress.Progress.stop" title="rich.progress.Progress.stop"><code class="xref py py-meth docutils literal notranslate"><span class="pre">stop()</span></code></a>) the last refreshed display remains in the terminal with the cursor on the following line. You can also make the progress display disappear on exit by setting <code class="docutils literal notranslate"><span class="pre">transient=True</span></code> on the Progress constructor. Here’s an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Progress</span><span class="p">(</span><span class="n">transient</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;Working&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>
+    <span class="n">do_work</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Transient progress displays are useful if you want more minimal output in the terminal when tasks are complete.</p>
+</div>
+<div class="section" id="indeterminate-progress">
+<h3>Indeterminate progress<a class="headerlink" href="#indeterminate-progress" title="Permalink to this headline">¶</a></h3>
+<p>When you add a task it is automatically <em>started</em>, which means it will show a progress bar at 0% and the time remaining will be calculated from the current time. This may not work well if there is a long delay before you can start updating progress; you may need to wait for a response from a server or count files in a directory (for example). In these cases you can call <a class="reference internal" href="reference/progress.html#rich.progress.Progress.add_task" title="rich.progress.Progress.add_task"><code class="xref py py-meth docutils literal notranslate"><span class="pre">add_task()</span></code></a> with <code class="docutils literal notranslate"><span class="pre">start=False</span></code> which will display a pulsing animation that lets the user know something is working. This is know as an <em>indeterminate</em> progress bar. When you have the number of steps you can call <a class="reference internal" href="reference/progress.html#rich.progress.Progress.start_task" title="rich.progress.Progress.start_task"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_task()</span></code></a> which will display the progress bar at 0%, then <a class="reference internal" href="reference/progress.html#rich.progress.Progress.update" title="rich.progress.Progress.update"><code class="xref py py-meth docutils literal notranslate"><span class="pre">update()</span></code></a> as normal.</p>
+</div>
+<div class="section" id="auto-refresh">
+<h3>Auto refresh<a class="headerlink" href="#auto-refresh" title="Permalink to this headline">¶</a></h3>
+<p>By default, the progress information will refresh 10 times a second. You can set the refresh rate with the <code class="docutils literal notranslate"><span class="pre">refresh_per_second</span></code> argument on the <a class="reference internal" href="reference/progress.html#rich.progress.Progress" title="rich.progress.Progress"><code class="xref py py-class docutils literal notranslate"><span class="pre">Progress</span></code></a> constructor. You should set this to something lower than 10 if you know your updates will not be that frequent.</p>
+<p>You might want to disable auto-refresh entirely if your updates are not very frequent, which you can do by setting <code class="docutils literal notranslate"><span class="pre">auto_refresh=False</span></code> on the constructor. If you disable auto-refresh you will need to call <a class="reference internal" href="reference/progress.html#rich.progress.Progress.refresh" title="rich.progress.Progress.refresh"><code class="xref py py-meth docutils literal notranslate"><span class="pre">refresh()</span></code></a> manually after updating your task(s).</p>
+</div>
+<div class="section" id="expand">
+<h3>Expand<a class="headerlink" href="#expand" title="Permalink to this headline">¶</a></h3>
+<p>The progress bar(s) will use only as much of the width of the terminal as required to show the task information. If you set the <code class="docutils literal notranslate"><span class="pre">expand</span></code> argument on the Progress constructor, then Rich will stretch the progress display to the full available width.</p>
+</div>
+<div class="section" id="columns">
+<h3>Columns<a class="headerlink" href="#columns" title="Permalink to this headline">¶</a></h3>
+<p>You may customize the columns in the progress display with the positional arguments to the <a class="reference internal" href="reference/progress.html#rich.progress.Progress" title="rich.progress.Progress"><code class="xref py py-class docutils literal notranslate"><span class="pre">Progress</span></code></a> constructor. The columns are specified as either a format string or a <a class="reference internal" href="reference/progress.html#rich.progress.ProgressColumn" title="rich.progress.ProgressColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgressColumn</span></code></a> object.</p>
+<p>Format strings will be rendered with a single value <cite>“task”</cite> which will be a <a class="reference internal" href="reference/progress.html#rich.progress.Task" title="rich.progress.Task"><code class="xref py py-class docutils literal notranslate"><span class="pre">Task</span></code></a> instance. For example <code class="docutils literal notranslate"><span class="pre">&quot;{task.description}&quot;</span></code> would display the task description in the column, and <code class="docutils literal notranslate"><span class="pre">&quot;{task.completed}</span> <span class="pre">of</span> <span class="pre">{task.total}&quot;</span></code> would display how many of the total steps have been completed.</p>
+<p>The defaults are roughly equivalent to the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">progress</span> <span class="o">=</span> <span class="n">Progress</span><span class="p">(</span>
+    <span class="s2">&quot;[progress.description]</span><span class="si">{task.description}</span><span class="s2">&quot;</span><span class="p">,</span>
+    <span class="n">BarColumn</span><span class="p">(),</span>
+    <span class="s2">&quot;[progress.percentage]</span><span class="si">{task.percentage:&gt;3.0f}</span><span class="s2">%&quot;</span><span class="p">,</span>
+    <span class="n">TimeRemainingColumn</span><span class="p">(),</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>The following column objects are available:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.BarColumn" title="rich.progress.BarColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">BarColumn</span></code></a> Displays the bar.</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.TextColumn" title="rich.progress.TextColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextColumn</span></code></a> Displays text.</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.TimeElapsedColumn" title="rich.progress.TimeElapsedColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeElapsedColumn</span></code></a> Displays the time elapsed.</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.TimeRemainingColumn" title="rich.progress.TimeRemainingColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">TimeRemainingColumn</span></code></a> Displays the estimated time remaining.</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.FileSizeColumn" title="rich.progress.FileSizeColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">FileSizeColumn</span></code></a> Displays progress as file size (assumes the steps are bytes).</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.TotalFileSizeColumn" title="rich.progress.TotalFileSizeColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">TotalFileSizeColumn</span></code></a> Displays total file size (assumes the steps are bytes).</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.DownloadColumn" title="rich.progress.DownloadColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">DownloadColumn</span></code></a> Displays download progress (assumes the steps are bytes).</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.TransferSpeedColumn" title="rich.progress.TransferSpeedColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">TransferSpeedColumn</span></code></a> Displays transfer speed (assumes the steps are bytes.</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.SpinnerColumn" title="rich.progress.SpinnerColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">SpinnerColumn</span></code></a> Displays a “spinner” animation.</p></li>
+<li><p><a class="reference internal" href="reference/progress.html#rich.progress.RenderableColumn" title="rich.progress.RenderableColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">RenderableColumn</span></code></a> Displays an arbitrary Rich renderable in the column.</p></li>
+</ul>
+<p>To implement your own columns, extend the <a class="reference internal" href="reference/progress.html#rich.progress.ProgressColumn" title="rich.progress.ProgressColumn"><code class="xref py py-class docutils literal notranslate"><span class="pre">ProgressColumn</span></code></a> class and use it as you would the other columns.</p>
+</div>
+<div class="section" id="table-columns">
+<h3>Table Columns<a class="headerlink" href="#table-columns" title="Permalink to this headline">¶</a></h3>
+<p>Rich builds a <a class="reference internal" href="reference/table.html#rich.table.Table" title="rich.table.Table"><code class="xref py py-class docutils literal notranslate"><span class="pre">Table</span></code></a> for the tasks in the Progress instance. You can customize how the columns of this <em>tasks table</em> are created by specifying the <code class="docutils literal notranslate"><span class="pre">table_column</span></code> argument in the Column constructor, which should be a <a class="reference internal" href="reference/table.html#rich.table.Column" title="rich.table.Column"><code class="xref py py-class docutils literal notranslate"><span class="pre">Column</span></code></a> instance.</p>
+<p>The following example demonstrates a progress bar where the description takes one third of the width of the terminal, and the bar takes up the remaining third:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">time</span> <span class="kn">import</span> <span class="n">sleep</span>
+
+<span class="kn">from</span> <span class="nn">rich.table</span> <span class="kn">import</span> <span class="n">Column</span>
+<span class="kn">from</span> <span class="nn">rich.progress</span> <span class="kn">import</span> <span class="n">Progress</span><span class="p">,</span> <span class="n">BarColumn</span><span class="p">,</span> <span class="n">TextColumn</span>
+
+<span class="n">text_column</span> <span class="o">=</span> <span class="n">TextColumn</span><span class="p">(</span><span class="s2">&quot;</span><span class="si">{task.description}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">table_column</span><span class="o">=</span><span class="n">Column</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">bar_column</span> <span class="o">=</span> <span class="n">BarColumn</span><span class="p">(</span><span class="n">bar_width</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">table_column</span><span class="o">=</span><span class="n">Column</span><span class="p">(</span><span class="n">ratio</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">progress</span> <span class="o">=</span> <span class="n">Progress</span><span class="p">(</span><span class="n">text_column</span><span class="p">,</span> <span class="n">bar_column</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="k">with</span> <span class="n">progress</span><span class="p">:</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">progress</span><span class="o">.</span><span class="n">track</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">100</span><span class="p">)):</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+        <span class="n">sleep</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="print-log">
+<h3>Print / log<a class="headerlink" href="#print-log" title="Permalink to this headline">¶</a></h3>
+<p>The Progress class will create an internal Console object which you can access via <code class="docutils literal notranslate"><span class="pre">progress.console</span></code>. If you print or log to this console, the output will be displayed <em>above</em> the progress display. Here’s an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">with</span> <span class="n">Progress</span><span class="p">()</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
+    <span class="n">task</span> <span class="o">=</span> <span class="n">progress</span><span class="o">.</span><span class="n">add_task</span><span class="p">(</span><span class="s2">&quot;twiddling thumbs&quot;</span><span class="p">,</span> <span class="n">total</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">job</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Working on job #</span><span class="si">{</span><span class="n">job</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">run_job</span><span class="p">(</span><span class="n">job</span><span class="p">)</span>
+        <span class="n">progress</span><span class="o">.</span><span class="n">advance</span><span class="p">(</span><span class="n">task</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you have another Console object you want to use, pass it in to the <a class="reference internal" href="reference/progress.html#rich.progress.Progress" title="rich.progress.Progress"><code class="xref py py-class docutils literal notranslate"><span class="pre">Progress</span></code></a> constructor. Here’s an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">my_project</span> <span class="kn">import</span> <span class="n">my_console</span>
+
+<span class="k">with</span> <span class="n">Progress</span><span class="p">(</span><span class="n">console</span><span class="o">=</span><span class="n">my_console</span><span class="p">)</span> <span class="k">as</span> <span class="n">progress</span><span class="p">:</span>
+    <span class="n">my_console</span><span class="o">.</span><span class="n">print</span><span class="p">(</span><span class="s2">&quot;[bold blue]Starting work!&quot;</span><span class="p">)</span>
+    <span class="n">do_work</span><span class="p">(</span><span class="n">progress</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="redirecting-stdout-stderr">
+<h3>Redirecting stdout / stderr<a class="headerlink" href="#redirecting-stdout-stderr" title="Permalink to this headline">¶</a></h3>
+<p>To avoid breaking the progress display visuals, Rich will redirect <code class="docutils literal notranslate"><span class="pre">stdout</span></code> and <code class="docutils literal notranslate"><span class="pre">stderr</span></code> so that you can use the builtin <code class="docutils literal notranslate"><span class="pre">print</span></code> statement. This feature is enabled by default, but you can disable by setting <code class="docutils literal notranslate"><span class="pre">redirect_stdout</span></code> or <code class="docutils literal notranslate"><span class="pre">redirect_stderr</span></code> to <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+</div>
+<div class="section" id="customizing">
+<h3>Customizing<a class="headerlink" href="#customizing" title="Permalink to this headline">¶</a></h3>
+<p>If the <a class="reference internal" href="reference/progress.html#rich.progress.Progress" title="rich.progress.Progress"><code class="xref py py-class docutils literal notranslate"><span class="pre">Progress</span></code></a> class doesn’t offer exactly what you need in terms of a progress display, you can override the <a class="reference internal" href="reference/progress.html#rich.progress.Progress.get_renderables" title="rich.progress.Progress.get_renderables"><code class="xref py py-class docutils literal notranslate"><span class="pre">get_renderables</span></code></a> method. For example, the following class will render a <a class="reference internal" href="reference/panel.html#rich.panel.Panel" title="rich.panel.Panel"><code class="xref py py-class docutils literal notranslate"><span class="pre">Panel</span></code></a> around the progress display:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rich.panel</span> <span class="kn">import</span> <span class="n">Panel</span>
+<span class="kn">from</span> <span class="nn">rich.progress</span> <span class="kn">import</span> <span class="n">Progress</span>
+
+<span class="k">class</span> <span class="nc">MyProgress</span><span class="p">(</span><span class="n">Progress</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">get_renderables</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">Panel</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">make_tasks_table</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">tasks</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="multiple-progress">
+<h2>Multiple Progress<a class="headerlink" href="#multiple-progress" title="Permalink to this headline">¶</a></h2>
+<p>You can’t have different columns per task with a single Progress instance. However, you can have as many Progress instance as you like in a <a class="reference internal" href="live.html#live"><span class="std std-ref">Live Display</span></a>. See <a class="reference external" href="https://github.com/willmcgugan/rich/blob/master/examples/live_progress.py">live_progress.py</a> for an example of using multiple Progress instances.</p>
+</div>
+<div class="section" id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference external" href="https://github.com/willmcgugan/rich/blob/master/examples/downloader.py">downloader.py</a> for a realistic application of a progress display. This script can download multiple concurrent files with a progress bar, transfer speed and file size.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="syntax.html" class="btn btn-neutral float-right" title="Syntax" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="panel.html" class="btn btn-neutral float-left" title="Panel" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2020, Will McGugan.
+      <span class="commit">
+        
+        Revision <code>2ea7e586</code>.
+      </span>
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//rich.readthedocs.io/_/downloads/en/stable/pdf/">pdf</a></dd>
+        
+          <dd><a href="//rich.readthedocs.io/_/downloads/en/stable/htmlzip/">html</a></dd>
+        
+          <dd><a href="//rich.readthedocs.io/_/downloads/en/stable/epub/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/rich/?fromdocs=rich">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/rich/?fromdocs=rich">Builds</a>
+          </dd>
+      </dl>
+    </div>
+  </div>
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+   
+
+</body>
+</html>
