@@ -1,6 +1,7 @@
 # WebsiteChangeNotifier
 
 ## Program to monitor a Website for changes and get notified by email when a change is Detected.
+### Optionally search for specific regular expressions on Websites
 
 ### Requirements:
 - Wget on your default OS
@@ -17,6 +18,11 @@
   - ssl
   - MIMEText
   - MIMEMultipart
+  - pyinputplus
+  - inputimeout
+  - datetime
+  - re
+
 
 ## Version 2.0 introduces a Command Line UI for a more user friendly approach:
 ![Command Prompt 7_26_2021 2_41_38 AM](https://user-images.githubusercontent.com/83036619/126919155-3a345df4-1784-47b9-a473-514331576853.png)
@@ -27,6 +33,7 @@
 
 ![Wget  100%  http___www example com_ 7_26_2021 2_43_34 AM](https://user-images.githubusercontent.com/83036619/126919187-c6011375-41c1-4cca-95be-b63a271f488b.png)
 
+![Command Prompt 7_27_2021 10_02_32 PM](https://user-images.githubusercontent.com/83036619/127219979-d3d2b9e1-ea8f-4209-b7f9-545cb17c2af5.png)
 
 ### How to use version 1.0:
 ```python
@@ -37,3 +44,6 @@ if __name__ == '__main__':
     file.start_monitoring(5, True) #check for change every 5 seconds, if second param set to True a copy of the site will be sent via email
 
 ```
+
+#### Works with static Websites that do not change dynamically
+#### Html is sent optionally by email as boiler plate without resources
